@@ -25,7 +25,7 @@ router.post("/register",async(req,res)=>{ //user nte data database il keran
             res.status(404).send("this user is already present") // database il add aaya email ID aan koduthathenkil aa email ID database il add aakilla, athinulla message aan ith
             return; //This will help to avoid sending multiple responses for a single request.
         }else{
-            const adduser = new users({ // database il illatha details aan kodukkunnathenkil
+            const adduser = new users({ // database il illatha details aan kodukkunnathenkil 
                 name,email,age,mobile,work,add,desc
             });
             
