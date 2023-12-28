@@ -65,7 +65,7 @@ const Table = () => {
                                     return (
                                         <>
                                             <tr>
-                                                <th scope="row">{id+1}</th>
+                                                <th scope="row">{id + 1}</th>
                                                 <td>{element?.name}</td>
                                                 <td>{element?.email}</td>
                                                 <td>{element?.work}</td>
@@ -80,11 +80,6 @@ const Table = () => {
                                     )
                                 })
                             }
-
-
-
-
-
                         </tbody>
                     </table>
                 </div>
