@@ -34,7 +34,7 @@ const Table = () => {
         }
     }
 
-    useEffect(() => {
+    useEffect(() => { //"useEffect" use cheyyunnath --> page reload cheyyumbol "getdata" enna fuction ne call cheyyum
         getdata();
     })
 

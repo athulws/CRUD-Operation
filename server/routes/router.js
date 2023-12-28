@@ -46,7 +46,7 @@ router.post("/register",async(req,res)=>{ //user nte data database il keran
 
 router.get("/getdata",async(req,res)=>{
     try {
-        const userdata = await users.find();
+        const userdata = await users.find(); // user details find cheythu
         res.status(201).json(userdata)
         console.log(userdata);
         
