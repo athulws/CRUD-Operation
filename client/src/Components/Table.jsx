@@ -4,6 +4,7 @@ import '../Styles/Table.css'
 import { CiRead } from "react-icons/ci";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
+import { Link } from 'react-router-dom';
 
 const Table = () => {
     return (
@@ -12,7 +13,7 @@ const Table = () => {
             <div className="mt-5">
                 <div className="container">
                     <div className="add_btn mt-2 mb-2">
-                        <button className='btn btn-primary'>Add data</button>
+                        <Link to='/register' className='btn btn-primary'>Add data</Link>
                     </div>
 
                     <table class="table">

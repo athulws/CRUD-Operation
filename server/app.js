@@ -11,7 +11,9 @@ const port = 8003;
 
 //ith cors cheyyumbol
 
-app.use(cors());
+app.use(cors({
+    origin:"http://localhost:3000"
+}));
 app.use(express.json()); // nammude data
 
 //ith cors cheyyumbol

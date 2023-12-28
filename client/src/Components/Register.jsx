@@ -25,6 +25,36 @@ const Register = () => {
             }
         })
     }
+
+    //connection of frontend and backend using "fetch" method
+    const addinpdata = async(e)=>{
+        e.preventDefault();
+
+        const {name,email,work,add,mobile,desc,age} = inpval;
+
+        const res = await fetch("http://localhost:8003/register",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                name,email,work,add,mobile,desc,age
+            })
+        });
+
+
+        // backend il varunnath success aano failure aano enn nokki aa varunnath frontend il varan
+        const data = await res.json();
+        console.log(data);
+
+        if (res.status === 404 || !data) {
+            alert("error");
+            console.log("error");
+        }else{
+            alert("data added")
+            console.log("data added");
+        }
+    }
     return (
         <div>
             <Navbar/>
@@ -69,7 +99,7 @@ const Register = () => {
                             <textarea value={inpval.desc} onChange={setData} name="desc" className='form-control' id="" cols="30" rows="5"></textarea>
                         </div>
                         
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" onClick={addinpdata} class="btn btn-primary">Submit</button>
                     </div>
                 </form>
             </div>

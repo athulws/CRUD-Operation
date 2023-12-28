@@ -12,7 +12,7 @@ router.post("/register",async(req,res)=>{ //user nte data database il keran
     const {name,email,age,mobile,work,add,desc} = req.body; //ivide direct mention cheyyukayaan cheyyunnath
 
     if (!name || !email || !age || !mobile || !work || !add || !desc) {
-       res.status(404).send("Plz fill the data") 
+       res.status(404).json("Plz fill the data") 
        return;//This will help to avoid sending multiple responses for a single request.
     }
 
@@ -22,7 +22,7 @@ router.post("/register",async(req,res)=>{ //user nte data database il keran
         console.log(preuser);
 
         if (preuser) {
-            res.status(404).send("this user is already present") // database il add aaya email ID aan koduthathenkil aa email ID database il add aakilla, athinulla message aan ith
+            res.status(404).json("this user is already present") // database il add aaya email ID aan koduthathenkil aa email ID database il add aakilla, athinulla message aan ith
             return; //This will help to avoid sending multiple responses for a single request.
         }else{
             const adduser = new users({ // database il illatha details aan kodukkunnathenkil 
@@ -34,7 +34,7 @@ router.post("/register",async(req,res)=>{ //user nte data database il keran
             console.log(adduser);
         }
     } catch (error) {
-        res.status(404).send(error)
+        res.status(404).json(error)
     }
 })
 
