@@ -7,6 +7,9 @@ const users = require("../Models/userSchema"); //ith ivideyum mention cheyyanam
 //     console.log("connect");
 // });
 
+
+//register user
+
 router.post("/register",async(req,res)=>{ //user nte data database il keran
     // console.log(req.body);
     const {name,email,age,mobile,work,add,desc} = req.body; //ivide direct mention cheyyukayaan cheyyunnath
@@ -35,6 +38,20 @@ router.post("/register",async(req,res)=>{ //user nte data database il keran
         }
     } catch (error) {
         res.status(404).json(error)
+    }
+})
+
+
+//get userdata
+
+router.get("/getdata",async(req,res)=>{
+    try {
+        const userdata = await users.find();
+        res.status(201).json(userdata)
+        console.log(userdata);
+        
+    } catch (error) {
+        res.status(404).json(error);
     }
 })
 

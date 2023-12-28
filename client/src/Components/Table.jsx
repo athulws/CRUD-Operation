@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from './Navbar'
 import '../Styles/Table.css'
 import { CiRead } from "react-icons/ci";
@@ -7,6 +7,37 @@ import { MdDelete } from "react-icons/md";
 import { Link } from 'react-router-dom';
 
 const Table = () => {
+
+    const [getuserdata, setUserdata] = useState([]);
+    console.log(getuserdata);
+
+    const getdata = async (e) => {
+
+
+        const res = await fetch("http://localhost:8003/getdata", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+
+        // backend il varunnath success aano failure aano enn nokki aa varunnath frontend il varan
+        const data = await res.json();
+        console.log(data);
+
+        if (res.status === 404 || !data) {
+            console.log("error");
+        } else {
+            setUserdata(data)
+            console.log("get data");
+        }
+    }
+
+    useEffect(() => {
+        getdata();
+    })
+
     return (
         <div>
             <Navbar />
@@ -29,31 +60,30 @@ const Table = () => {
                         </thead>
                         <tbody>
 
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>meet</td>
-                                <td>meet@email.com</td>
-                                <td>Webdeveloper</td>
-                                <td>9191919191</td>
-                                <td className='d-flex justify-content-between'>
-                                    <button className='btn btn-success'><CiRead /></button>
-                                    <button className='btn btn-primary'><MdEdit /></button>
-                                    <button className='btn btn-danger'><MdDelete /></button>
-                                </td>
-                            </tr>
+                            {
+                                getuserdata.map((element, id) => {
+                                    return (
+                                        <>
+                                            <tr>
+                                                <th scope="row">{id+1}</th>
+                                                <td>{element?.name}</td>
+                                                <td>{element?.email}</td>
+                                                <td>{element?.work}</td>
+                                                <td>{element?.mobile}</td>
+                                                <td className='d-flex justify-content-between'>
+                                                    <button className='btn btn-success'><CiRead /></button>
+                                                    <button className='btn btn-primary'><MdEdit /></button>
+                                                    <button className='btn btn-danger'><MdDelete /></button>
+                                                </td>
+                                            </tr>
+                                        </>
+                                    )
+                                })
+                            }
 
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>meet</td>
-                                <td>meet@email.com</td>
-                                <td>Webdeveloper</td>
-                                <td>9191919191</td>
-                                <td className='d-flex justify-content-between'>
-                                    <button className='btn btn-success'><CiRead /></button>
-                                    <button className='btn btn-primary'><MdEdit /></button>
-                                    <button className='btn btn-danger'><MdDelete /></button>
-                                </td>
-                            </tr>
+
+
+
 
                         </tbody>
                     </table>
