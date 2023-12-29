@@ -1,15 +1,9 @@
-import React, { useState ,useHistory } from 'react'
+import React, { useState } from 'react'
 import '../Styles/Register.css'
 import { Link } from 'react-router-dom'
 import Navbar from './Navbar'
 
 const Register = () => {
-
-    //  ............................submit click cheyyumbol redirect to home page cheyyan................................... 
-
-    const history = useHistory("");
-
-    //  ............................submit click cheyyumbol redirect to home page cheyyan................................... 
 
     const [inpval, setINP] = useState({
         name:"", //ee sambavangal use cheyth backend il ulla datas store cheyym
@@ -58,7 +52,6 @@ const Register = () => {
             console.log("error");
         }else{
             alert("data added")
-            history.push('/');//submit click cheyyumbol redirect to home page cheyyan
             console.log("data added");
         }
     }

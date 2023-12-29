@@ -10,7 +10,7 @@ const Edit = () => {
 
     //  ............................submit click cheyyumbol redirect to home page cheyyan................................... 
 
-    const history = useHistory("");
+    // const history = useHistory("");
 
     //  ............................submit click cheyyumbol redirect to home page cheyyan................................... 
 
@@ -103,7 +103,7 @@ const Edit = () => {
         } else {
             alert("data added")
 
-            history.push("/") //submit click cheyyumbol redirect to home page cheyyan
+            // history.push("/") //submit click cheyyumbol redirect to home page cheyyan
         }
 
     }
