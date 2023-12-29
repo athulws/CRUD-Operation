@@ -65,14 +65,18 @@ const Table = () => {
                                     return (
                                         <>
                                             <tr>
+                                                {/* "id+1" koduthath oronn details varumbozum 1,2,3,4,....angane pokan */}
                                                 <th scope="row">{id + 1}</th>
                                                 <td>{element?.name}</td>
                                                 <td>{element?.email}</td>
                                                 <td>{element?.work}</td>
                                                 <td>{element?.mobile}</td>
                                                 <td className='d-flex justify-content-between'>
-                                                    <button className='btn btn-success'><CiRead /></button>
-                                                    <button className='btn btn-primary'><MdEdit /></button>
+
+                                                    {/* App.js il ulla path aan ith */}
+
+                                                    <Link to={`view/${element._id}`}><button className='btn btn-success'><CiRead /></button></Link>
+                                                    <Link to={`edit/${element._id}`}><button className='btn btn-primary'><MdEdit /></button></Link>
                                                     <button className='btn btn-danger'><MdDelete /></button>
                                                 </td>
                                             </tr>

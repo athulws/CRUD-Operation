@@ -1,8 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useHistory } from 'react'
 import '../Styles/Edit.css'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
+
 
 const Edit = () => {
+
+    // const [getuserdata, setUserdata] = useState([]);
+    // console.log(getuserdata);
+
+    //  ............................submit click cheyyumbol redirect to home page cheyyan................................... 
+
+    const history = useHistory("");
+
+    //  ............................submit click cheyyumbol redirect to home page cheyyan................................... 
+
+
+    //  ............................Table.jsx...................................   
     const [inpval, setINP] = useState({
         name: "",
         email: "",
@@ -23,6 +36,81 @@ const Edit = () => {
             }
         })
     }
+    //  ............................Table.jsx...................................
+
+
+
+    //  ............................Details.jsx.................................
+
+
+    //eye nte icon click cheyyumbol oro "id" kk anusarich details varan
+    const { id } = useParams("")
+    console.log(id);
+
+    const getdata = async (e) => {
+
+        const res = await fetch(`http://localhost:8003/getuser/${id}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+
+        // backend il varunnath success aano failure aano enn nokki aa varunnath frontend il varan
+        const data = await res.json();
+        console.log(data);
+
+        if (res.status === 404 || !data) {
+            console.log("error");
+        } else {
+            setINP(data) // ivide nammude data ellam "setINP" store aakknnu, so "edit" icon click cheyyumbol athil ulla datas forms il fill aakm
+            // munbe ivide undayath ---> "setUserdata(data)" 
+            console.log("get data");
+        }
+    }
+
+    useEffect(() => { //"useEffect" use cheyyunnath --> page reload cheyyumbol "getdata" enna fuction ne call cheyyum
+        getdata();
+    }, []);
+
+    //  ............................Details.jsx.................................
+
+
+    //  ............................editing setting.................................
+
+    const updateuser = async (e) => {
+        e.preventDefault();
+
+        const { name, email, work, add, mobile, desc, age } = inpval;
+
+        const res2 = await fetch(`http://localhost:8003/updateuser/${id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name, email, work, add, mobile, desc, age
+            })
+        });
+
+        // backend il varunnath success aano failure aano enn nokki aa varunnath frontend il varan
+        const data2 = await res2.json();
+        console.log(data2);
+
+        if (res2.status === 422 || !data2) {
+            alert("fill the data")
+        } else {
+            alert("data added")
+
+            history.push("/") //submit click cheyyumbol redirect to home page cheyyan
+        }
+
+    }
+
+    //  ............................editing setting.................................
+
+
     return (
         <div className='container'>
             <Link to={'/'}>home2</Link>
@@ -65,7 +153,7 @@ const Edit = () => {
                         <textarea value={inpval.desc} onChange={setData} name="desc" className='form-control' id="" cols="30" rows="5"></textarea>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" onClick={updateuser} class="btn btn-primary">Submit</button>
                 </div>
             </form>
         </div>

@@ -34,7 +34,7 @@ const Navbar = () => {
                 <div className="bar"></div>
             </div>
             <ul className='navbar-options'>
-                <Link to={''}><div>CREATE TOURNAMENT</div></Link>
+                <Link to={'/'}><div>Home</div></Link>
                 {/* <Link to={'/about/'}><div>About Us</div></Link>
                 <li className="dropdown">
                     How it works

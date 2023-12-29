@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect,useState } from 'react'
 import '../Styles/Details.css'
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -11,8 +11,44 @@ import { FaMobileAlt } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
+import { useParams } from 'react-router-dom';
 
 const Details = () => {
+
+  //eye nte icon click cheyyumbol oro "id" kk anusarich details varan
+  const {id} = useParams("")
+  console.log(id);
+
+  const [getuserdata, setUserdata] = useState([]);
+  console.log(getuserdata);
+
+  const getdata = async (e) => {
+
+    const res = await fetch(`http://localhost:8003/getuser/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+
+
+    // backend il varunnath success aano failure aano enn nokki aa varunnath frontend il varan
+    const data = await res.json();
+    console.log(data);
+
+    if (res.status === 404 || !data) {
+      console.log("error");
+    } else {
+      setUserdata(data)
+      console.log("get data");
+    }
+  }
+
+  //details nte page open aakmbol call cheyyan, ith aayal aan "getdata()" work aakua
+  useEffect(()=>{
+    getdata();
+  })
+
   return (
     <div>
       <Navbar />
@@ -29,17 +65,17 @@ const Details = () => {
             <div className='row'>
               <div className="left_view col-lg-6 col-md-6 col-sm-12">
                 <img src={profile} style={{ width: 50 }} alt="" />
-                <h3 className='mt-3'>Name: <span>Harsh Pathak</span></h3>
+                <h3 className='mt-3'>Name: <span>{getuserdata.name}</span></h3>
                 <h3 className='mt-3'>Age: <span>21</span></h3>
-                <p className='mt-3'><MdMailOutline />Email: <span>harsh@gmail.com</span></p>
-                <p className='mt-3'><MdWork />Occupation: <span>Webdeveloper</span></p>
+                <p className='mt-3'><MdMailOutline />Email: <span>{getuserdata.name}</span></p>
+                <p className='mt-3'><MdWork />Occupation: <span>{getuserdata.work}</span></p>
               </div>
 
               <div className="right_view col-lg-6 col-md-6 col-sm-12">
 
-                <p className='mt-5'><FaMobileAlt />Mobile: <span>+91 9090909090</span></p>
-                <p className='mt-3'><FaLocationDot />Location: <span>ahmedabad</span></p>
-                <p className='mt-3'>Description: <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, animi!</span></p>
+                <p className='mt-5'><FaMobileAlt />Mobile: <span>{getuserdata.mobile}</span></p>
+                <p className='mt-3'><FaLocationDot />Location: <span>{getuserdata.add}</span></p>
+                <p className='mt-3'>Description: <span>{getuserdata.desc}</span></p>
               </div>
             </div>
 

@@ -1,9 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState ,useHistory } from 'react'
 import '../Styles/Register.css'
 import { Link } from 'react-router-dom'
 import Navbar from './Navbar'
 
 const Register = () => {
+
+    //  ............................submit click cheyyumbol redirect to home page cheyyan................................... 
+
+    const history = useHistory("");
+
+    //  ............................submit click cheyyumbol redirect to home page cheyyan................................... 
 
     const [inpval, setINP] = useState({
         name:"", //ee sambavangal use cheyth backend il ulla datas store cheyym
@@ -47,11 +53,12 @@ const Register = () => {
         const data = await res.json();
         console.log(data);
 
-        if (res.status === 404 || !data) {
+        if (res.status === 422 || !data) {
             alert("error");
             console.log("error");
         }else{
             alert("data added")
+            history.push('/');//submit click cheyyumbol redirect to home page cheyyan
             console.log("data added");
         }
     }
@@ -65,7 +72,7 @@ const Register = () => {
 
                         <div class="mb-3 col-lg-6 col-md-6 col-12">
                             <label for="exampleInputEmail1" class="form-label">Name</label>
-                            <input type="email" value={inpval.name} onChange={setData} name='name' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+                            <input type="text" value={inpval.name} onChange={setData} name='name' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
                             <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                         </div>
 

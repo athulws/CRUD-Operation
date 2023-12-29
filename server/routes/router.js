@@ -10,49 +10,82 @@ const users = require("../Models/userSchema"); //ith ivideyum mention cheyyanam
 
 //register user
 
-router.post("/register",async(req,res)=>{ //user nte data database il keran
+router.post("/register", async (req, res) => { //user nte data database il keran
     // console.log(req.body);
-    const {name,email,age,mobile,work,add,desc} = req.body; //ivide direct mention cheyyukayaan cheyyunnath
+    const { name, email, age, mobile, work, add, desc } = req.body; //ivide direct mention cheyyukayaan cheyyunnath
 
     if (!name || !email || !age || !mobile || !work || !add || !desc) {
-       res.status(404).json("Plz fill the data") 
-       return;//This will help to avoid sending multiple responses for a single request.
+        res.status(422).json("Plz fill the data")
+        return;//This will help to avoid sending multiple responses for a single request.
     }
 
     try {
-        const preuser = await users.findOne({email:email}) //"users" enna database il already register cheytha user aano nokkan,(ie, already register aaya email ID aano enn nokkan)
-                                                          // "email:email" --> aadyathe "email" database il ulla email, randamathe "email" is nammal type cheyyunna email
+        const preuser = await users.findOne({ email: email }) //"users" enna database il already register cheytha user aano nokkan,(ie, already register aaya email ID aano enn nokkan)
+        // "email:email" --> aadyathe "email" database il ulla email, randamathe "email" is nammal type cheyyunna email
         console.log(preuser);
 
         if (preuser) {
-            res.status(404).json("this user is already present") // database il add aaya email ID aan koduthathenkil aa email ID database il add aakilla, athinulla message aan ith
+            res.status(422).json("this user is already present") // database il add aaya email ID aan koduthathenkil aa email ID database il add aakilla, athinulla message aan ith
             return; //This will help to avoid sending multiple responses for a single request.
-        }else{
+        } else {
             const adduser = new users({ // database il illatha details aan kodukkunnathenkil 
-                name,email,age,mobile,work,add,desc
+                name, email, age, mobile, work, add, desc
             });
-            
+
             await adduser.save(); // database il save aakan
             res.status(201).json(adduser) // save aayal response send cheyyum
             console.log(adduser);
         }
     } catch (error) {
-        res.status(404).json(error)
+        res.status(422).json(error)
     }
 })
 
 
 //get userdata
 
-router.get("/getdata",async(req,res)=>{
+router.get("/getdata", async (req, res) => {
     try {
         const userdata = await users.find(); // user details find cheythu
         res.status(201).json(userdata)
         console.log(userdata);
-        
+
     } catch (error) {
-        res.status(404).json(error);
+        res.status(422).json(error);
     }
 })
 
+// get individual user
+
+router.get("/getuser/:id", async (req, res) => {
+    try {
+        console.log(req.params);
+        const { id } = req.params;
+
+        const userindividual = await users.findById({ _id: id }); // valid "id" aanenkil ith work aakm
+        console.log(userindividual);
+        res.status(201).json(userindividual) // ith success aayal "details.jsx" il pokm
+
+    } catch (error) {
+        res.status(422).json(error)
+    }
+})
+
+// update user data
+
+router.patch("/updateuser/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const updateduser = await users.findByIdAndUpdate(id, req.body, {
+            new: true //kodukkunna updated value kittan
+        })
+
+        console.log(updateduser);
+        res.status(201).json(updateduser)
+
+    } catch (error) {
+        res.status(422).json(error);
+    }
+})
 module.exports = router;
