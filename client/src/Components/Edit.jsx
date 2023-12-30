@@ -8,11 +8,7 @@ const Edit = () => {
     // const [getuserdata, setUserdata] = useState([]);
     // console.log(getuserdata);
 
-    //  ............................submit click cheyyumbol redirect to home page cheyyan................................... 
-
-    // const history = useHistory("");
-
-    //  ............................submit click cheyyumbol redirect to home page cheyyan................................... 
+   
 
 
     //  ............................Table.jsx...................................   
@@ -103,7 +99,7 @@ const Edit = () => {
         } else {
             alert("data added")
 
-            // history.push("/") //submit click cheyyumbol redirect to home page cheyyan
+            
         }
 
     }

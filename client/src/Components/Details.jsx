@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../Styles/Details.css'
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -11,12 +11,12 @@ import { FaMobileAlt } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const Details = () => {
 
   //eye nte icon click cheyyumbol oro "id" kk anusarich details varan
-  const {id} = useParams("")
+  const { id } = useParams("")
   console.log(id);
 
   const [getuserdata, setUserdata] = useState([]);
@@ -45,9 +45,34 @@ const Details = () => {
   }
 
   //details nte page open aakmbol call cheyyan, ith aayal aan "getdata()" work aakua
-  useEffect(()=>{
+  useEffect(() => {
     getdata();
   })
+
+
+  // ...............ith Table.jsx il ninn copy cheyyunnathaan..............
+
+  const deleteuser = async (id) => {
+    const res2 = await fetch(`http://localhost:8003/deleteuser/${id}`, {
+      method: "DELETE",
+      headers: {
+        "content-Type": "application/json"
+      }
+    });
+
+    const deletedata = await res2.json();
+    console.log(deletedata);
+
+    if (res2.status === 422 || !deletedata) {
+      console.log(deletedata);
+    } else {
+      console.log("user deleted");
+      
+    }
+  }
+
+  // ...............ith Table.jsx il ninn copy cheyyunnathaan..............
+
 
   return (
     <div>
@@ -58,8 +83,11 @@ const Details = () => {
         <Card sx={{ maxWidth: 600 }}>
           <CardContent>
             <div className="add_btn">
-              <button className='btn btn-primary mx-2'><MdEdit /></button>
-              <button className='btn btn-danger'><MdDelete /></button>
+
+              {/* edit cheyyunnathinte path aan ith */}
+              <Link to={`/edit/${getuserdata._id}`}><button className='btn btn-primary mx-2'><MdEdit /></button></Link>
+
+              <button className='btn btn-danger' onClick={() => deleteuser(getuserdata._id)}><MdDelete /></button>
             </div>
 
             <div className='row'>

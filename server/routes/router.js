@@ -42,9 +42,11 @@ router.post("/register", async (req, res) => { //user nte data database il keran
 })
 
 
+
+
 //get userdata
 
-router.get("/getdata", async (req, res) => {
+router.get("/getdata", async (req, res) => { //api defining
     try {
         const userdata = await users.find(); // user details find cheythu
         res.status(201).json(userdata)
@@ -57,7 +59,7 @@ router.get("/getdata", async (req, res) => {
 
 // get individual user
 
-router.get("/getuser/:id", async (req, res) => {
+router.get("/getuser/:id", async (req, res) => { //api defining
     try {
         console.log(req.params);
         const { id } = req.params;
@@ -73,7 +75,7 @@ router.get("/getuser/:id", async (req, res) => {
 
 // update user data
 
-router.patch("/updateuser/:id", async (req, res) => {
+router.patch("/updateuser/:id", async (req, res) => { //api defining
     try {
         const { id } = req.params;
 
@@ -83,6 +85,22 @@ router.patch("/updateuser/:id", async (req, res) => {
 
         console.log(updateduser);
         res.status(201).json(updateduser)
+
+    } catch (error) {
+        res.status(422).json(error);
+    }
+})
+
+//delete user
+
+router.delete("/deleteuser/:id", async (req, res) => { //api defining
+    try {
+        const { id } = req.params;
+
+        const deletuser = await users.findByIdAndDelete({_id:id})
+
+        console.log(deletuser);
+        res.status(201).json(deletuser)
 
     } catch (error) {
         res.status(422).json(error);

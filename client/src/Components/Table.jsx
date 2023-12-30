@@ -38,6 +38,31 @@ const Table = () => {
         getdata();
     })
 
+
+    // ..........................delete functionality...........................
+
+    const deleteuser = async (id) =>{
+        const res2 = await fetch(`http://localhost:8003/deleteuser/${id}`,{
+            method:"DELETE",
+            headers: {
+                "content-Type": "application/json"
+            }
+        });
+
+        const deletedata = await res2.json();
+        console.log(deletedata);
+
+        if (res2.status === 422 || !deletedata) {
+            console.log(deletedata);
+        }else{
+            console.log("user deleted");
+            getdata(); // delete aayi kazhinjal veedum "getdata();" ne call cheyym
+        }
+    }
+
+    // ..........................delete functionality...........................
+
+
     return (
         <div>
             <Navbar />
@@ -77,7 +102,7 @@ const Table = () => {
 
                                                     <Link to={`view/${element._id}`}><button className='btn btn-success'><CiRead /></button></Link>
                                                     <Link to={`edit/${element._id}`}><button className='btn btn-primary'><MdEdit /></button></Link>
-                                                    <button className='btn btn-danger'><MdDelete /></button>
+                                                    <button className='btn btn-danger' onClick={()=>deleteuser(element._id)}><MdDelete /></button>
                                                 </td>
                                             </tr>
                                         </>
